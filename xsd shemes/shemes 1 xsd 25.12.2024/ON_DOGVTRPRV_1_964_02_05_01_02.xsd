@@ -1,0 +1,1049 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<!-- edited with XMLSpy v2006 sp2 U (http://www.altova.com) by SKS (GNIVC FNS RF) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:usch="http://www.unisoftware.ru/schematron-extensions" xmlns:sql="urn:schemas-microsoft-com:mapping-schema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="Файл">
+		<xs:annotation>
+			<!---*******************************************************************************************************************************************************************************-->
+			<xs:appinfo>
+				<sch:pattern name="Проверка имени файла на соответствие значению атрибута @ИдФайл">
+					<sch:rule context="Файл">
+						<!--  1. Проверка имени файла на соответствие ИдФайл                                                                             -->
+						<sch:assert test="usch:getFileName() = @ИдФайл">
+							<usch:error code="0400400007" path="@ИдФайл" value-of-select="@ИдФайл" doc-id-path="usch:getFileName()" doc-id-caption="Файл">Имя файла обмена "<usch:value-of select="usch:getFileName()"/>" не совпадает со значением элемента ИдФайл "<usch:value-of select="@ИдФайл"/>"</usch:error>
+						</sch:assert>
+					</sch:rule>
+				</sch:pattern>
+			</xs:appinfo>
+			<!---*******************************************************************************************************************************************************************************-->
+			<xs:documentation>Файл обмена</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ИдПолИной" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Идентификатор иного получателя файла обмена информации перевозчика</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="4"/>
+							<xs:maxLength value="46"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Документ">
+					<xs:annotation>
+						<xs:documentation>Электронный договор перевозки груза, информация перевозчика</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ИдИнфГО">
+								<xs:annotation>
+									<xs:documentation>Идентификатор файла обмена информации грузоотправителя</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="ИдФайлИнфГО" use="required">
+										<xs:annotation>
+											<xs:documentation>Идентификатор файла обмена информации грузоотправителя</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:minLength value="1"/>
+												<xs:maxLength value="255"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="ДатФайлИнфГО" type="ДатаТип" use="required">
+										<xs:annotation>
+											<xs:documentation>Дата формирования файла обмена информации грузоотправителя</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="ВрФайлИнфГО" type="ВремяТип" use="required">
+										<xs:annotation>
+											<xs:documentation>Время формирования файла обмена информации грузоотправителя</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="ЭП" use="required">
+										<xs:annotation>
+											<xs:documentation>Электронная подпись файла обмена информации грузоотправителя</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:minLength value="1"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="СодИнфПрв">
+								<xs:annotation>
+									<xs:documentation>Содержание электронного договора перевозки груза, информация перевозчика</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="ОбщУслПерв">
+											<xs:annotation>
+												<xs:documentation>Общие условия перевозки груза</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="УслПогр" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Условия погрузки груза на судно</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="1"/>
+																<xs:maxLength value="1000"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="УслВыгрПрич" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Условия выгрузки груза из судна на причал</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="1"/>
+																<xs:maxLength value="1000"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="УслВыгрСклад" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Условия выгрузки груза из судна на склад</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="1"/>
+																<xs:maxLength value="1000"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="УслОчстСудно" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Условия очистки судна</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="1"/>
+																<xs:maxLength value="1000"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="СрокВывозГруз" use="optional">
+													<xs:annotation>
+														<xs:documentation>Срок вывоза груза со складов грузополучателем</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:minLength value="1"/>
+															<xs:maxLength value="100"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="СвСудно">
+											<xs:annotation>
+												<xs:documentation>Сведения о судне</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ФИОКапитан" type="ФИОТип">
+														<xs:annotation>
+															<xs:documentation>Фамилия, имя, отчество (при наличии) капитана судна</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="НазвСудно" use="required">
+													<xs:annotation>
+														<xs:documentation>Название судна</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:minLength value="1"/>
+															<xs:maxLength value="150"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="ТипПредСудно" use="required">
+													<xs:annotation>
+														<xs:documentation>Тип предоставляемого судна</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:minLength value="1"/>
+															<xs:maxLength value="255"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="СвОплУслуг">
+											<xs:annotation>
+												<xs:documentation>Сведения об оплате услуг по перевозке груза</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ПорРасч" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Порядок расчета за услуги по перевозке груза</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="1"/>
+																<xs:maxLength value="1000"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:choice>
+														<xs:element name="СумНачРуб" minOccurs="0">
+															<xs:annotation>
+																<xs:documentation>Сумма, которую грузоотправитель уплачивает перевозчику до начала перевозки, в рублях</xs:documentation>
+															</xs:annotation>
+															<xs:simpleType>
+																<xs:restriction base="xs:decimal">
+																	<xs:totalDigits value="18"/>
+																	<xs:fractionDigits value="2"/>
+																</xs:restriction>
+															</xs:simpleType>
+														</xs:element>
+														<xs:element name="СумНачПроц" minOccurs="0">
+															<xs:annotation>
+																<xs:documentation>Сумма, которую грузоотправитель уплачивает перевозчику до начала перевозки, в процентах от общей стоимости услуг</xs:documentation>
+															</xs:annotation>
+															<xs:simpleType>
+																<xs:restriction base="xs:integer">
+																	<xs:totalDigits value="3"/>
+																</xs:restriction>
+															</xs:simpleType>
+														</xs:element>
+													</xs:choice>
+													<xs:element name="РасчНедстчИзлш" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Порядок расчета за недостачи и излишки груза</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="1"/>
+																<xs:maxLength value="1000"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="УслОплПА" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Условия оплаты переадресовки груза</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="СумНал" type="СумНДСТип">
+																	<xs:annotation>
+																		<xs:documentation>Сумма налога</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:sequence>
+															<xs:attribute name="СтПА" use="required">
+																<xs:annotation>
+																	<xs:documentation>Стоимость переадресовки груза с налогом</xs:documentation>
+																</xs:annotation>
+																<xs:simpleType>
+																	<xs:restriction base="xs:decimal">
+																		<xs:totalDigits value="18"/>
+																		<xs:fractionDigits value="2"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:attribute>
+															<xs:attribute name="НалСт" use="required">
+																<xs:annotation>
+																	<xs:documentation>Налоговая ставка </xs:documentation>
+																</xs:annotation>
+																<xs:simpleType>
+																	<xs:restriction base="xs:string">
+																		<xs:minLength value="1"/>
+																		<xs:maxLength value="35"/>
+																		<xs:enumeration value="0%"/>
+																		<xs:enumeration value="5%"/>
+																		<xs:enumeration value="7%"/>
+																		<xs:enumeration value="9,09%"/>
+																		<xs:enumeration value="10%"/>
+																		<xs:enumeration value="16,67%"/>
+																		<xs:enumeration value="20%"/>
+																		<xs:enumeration value="5/105"/>
+																		<xs:enumeration value="7/107"/>
+																		<xs:enumeration value="10/110"/>
+																		<xs:enumeration value="20/120"/>
+																		<xs:enumeration value="без НДС"/>
+																		<xs:enumeration value="НДС исчисляется налоговым агентом"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="ДокОплУсл" type="РеквДокТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Документ, согласно которому производится оплата услуг по перевозке груза</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="ОбщСтУсл" use="required">
+													<xs:annotation>
+														<xs:documentation>Общая стоимость услуг по перевозке груза</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="xs:decimal">
+															<xs:totalDigits value="18"/>
+															<xs:fractionDigits value="2"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="СвОбязн">
+											<xs:annotation>
+												<xs:documentation>Сведения о правах и обязанностях сторон</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ОбязнГО" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Права и обязанности грузоотправителя</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="1"/>
+																<xs:maxLength value="500"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="ОбязнПрв" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Права и обязанности перевозчика</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="1"/>
+																<xs:maxLength value="500"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="УслПрекрОбяз" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Условия прекращения обязательств по электронному договору перевозки груза</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="1"/>
+																<xs:maxLength value="500"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="СвОтвет">
+											<xs:annotation>
+												<xs:documentation>Сведения об ответственности сторон</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ОтветГО" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Ответственность грузоотправителя</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="1"/>
+																<xs:maxLength value="500"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="ОтветПрв" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Ответственность перевозчика</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="1"/>
+																<xs:maxLength value="500"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="УслСпор" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Условия рассмотрения споров</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="1"/>
+																<xs:maxLength value="500"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="ИнфПол" type="ИнфПолТип" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Информационное поле</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="УИД_ДПГ" use="required">
+										<xs:annotation>
+											<xs:documentation>Уникальный идентификатор документа (УИД) электронного договора перевозки груза</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:minLength value="1"/>
+												<xs:maxLength value="36"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ПодпИнфПрв" type="ПодписантТип">
+								<xs:annotation>
+									<!---************************************************************************************************************************************************************-->
+									<xs:appinfo>
+										<sch:pattern name="Проверка присутствия элемента СвДоверЭл">
+											<sch:rule context="ПодпИнфПрв">
+												<sch:assert test="usch:iif(@СпосПодтПолном=3, count(СвДоверЭл)!=0, count(СвДоверЭл)=0)">
+													<usch:error code="0400300003" path="ПодпИнфГО" value-of-select="">Не выполнено условие: Элемент СвДоверЭл обязателен при значении элемента СпосПодтПолном, равном "3", и должен отсутствовать при остальных значениях элемента СпосПодтПолном</usch:error>
+												</sch:assert>
+											</sch:rule>
+										</sch:pattern>
+									</xs:appinfo>
+									<!---*************************************************************************************************************************************************************-->
+									<!---************************************************************************************************************************************************************-->
+									<xs:appinfo>
+										<sch:pattern name="Проверка присутствия элемента СвДоверБум">
+											<sch:rule context="ПодпИнфПрв">
+												<sch:assert test="usch:iif(@СпосПодтПолном=5, count(СвДоверБум)!=0, count(СвДоверБум)=0)">
+													<usch:error code="0400300003" path="ПодпИнфГО" value-of-select="">Не выполнено условие: Элемент СвДоверБум обязателен при значении элемента СпосПодтПолном, равном "5", и должен отсутствовать при остальных значениях элемента СпосПодтПолном</usch:error>
+												</sch:assert>
+											</sch:rule>
+										</sch:pattern>
+									</xs:appinfo>
+									<!---*************************************************************************************************************************************************************-->
+									<xs:documentation>Сведения о лице, подписывающем файл обмена информации перевозчика</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="КНД" use="required">
+							<xs:annotation>
+								<xs:documentation>Код формы документа по классификатору налоговых документов (КНД)</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:length value="7"/>
+									<xs:enumeration value="1110427"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="НаимДокИнфПрв" use="required">
+							<xs:annotation>
+								<xs:documentation>Наименование документа по содержанию информации в файле обмена информации перевозчика</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:minLength value="1"/>
+									<xs:maxLength value="255"/>
+									<xs:enumeration value="электронный договор перевозки груза, информация перевозчика"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="ДатИнфПрв" type="ДатаТип" use="required">
+							<xs:annotation>
+								<xs:documentation>Дата формирования файла обмена информации перевозчика</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="ВрИнфПрв" type="ВремяТип" use="required">
+							<xs:annotation>
+								<xs:documentation>Время формирования файла обмена информации перевозчика</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="ИдФайл" use="required">
+				<xs:annotation>
+					<xs:documentation>Идентификатор файла</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="255"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="ВерсПрог" use="required">
+				<xs:annotation>
+					<xs:documentation>Версия программы, с помощью которой сформирован файл</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="40"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="ВерсФорм" use="required">
+				<xs:annotation>
+					<xs:documentation>Версия формата</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="5"/>
+						<xs:enumeration value="5.01"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="РеквДокТип">
+		<xs:annotation>
+			<xs:documentation>Реквизиты документа</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="РеквИдРекСост" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Идентифицирующие реквизиты сторон, составивших (сформировавших) документ</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="ИННЮЛ" type="ИННЮЛТип">
+							<xs:annotation>
+								<xs:documentation>ИНН организации, состоящей на учете в налоговом органе</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="ИННФЛ" type="ИННФЛТип" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>ИНН физического лица, не являющегося индивидуальным предпринимателем</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="ИННИП" type="ИННФЛТип">
+							<xs:annotation>
+								<xs:documentation>ИНН индивидуального предпринимателя</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="ДаннИно" type="СвИнНеУчТип">
+							<xs:annotation>
+								<!---*********************************************************************************************************************************************************-->
+								<xs:appinfo>
+									<sch:pattern name="Присутствие элемента Идентиф или ИныеСвед">
+										<sch:rule context="ДаннИно">
+											<sch:assert test="count(@Идентиф)!=0 or count(@ИныеСвед)!=0">
+												<usch:error code="0400300003" path="" value-of-select="">Не выполнено условие - хотя бы один из элементов Идентиф или ИныеСвед должен присутствовать</usch:error>
+											</sch:assert>
+										</sch:rule>
+									</sch:pattern>
+								</xs:appinfo>
+								<!---*********************************************************************************************************************************************************-->
+								<xs:documentation>Данные об иностранной организации (иностранном гражданине), не состоящей/состоящем на учете в налоговом органе</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="НаимОИВ">
+							<xs:annotation>
+								<xs:documentation>Краткое наименование органа исполнительной власти (специализированной уполномоченной организации), выдавшего документ</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:minLength value="1"/>
+									<xs:maxLength value="255"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="РеквНаимДок" use="required">
+			<xs:annotation>
+				<xs:documentation>Наименование документа</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="255"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="РеквНомерДок" use="required">
+			<xs:annotation>
+				<xs:documentation>Номер документа</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="255"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="РеквДатаДок" type="ДатаТип" use="required">
+			<xs:annotation>
+				<xs:documentation>Дата документа</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="РеквИдФайлДок" use="optional">
+			<xs:annotation>
+				<xs:documentation>Идентификатор файла обмена документа, подписанного первой стороной</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="255"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="РеквИдДок" use="optional">
+			<xs:annotation>
+				<xs:documentation>Идентификатор документа</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="255"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="РидСистХранД" use="optional">
+			<xs:annotation>
+				<xs:documentation>Идентифицирующая информация об информационной системе, в которой осуществляется хранение документа, необходимая для запроса информации из информационной системы</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="500"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="РеквУРЛСистДок" use="optional">
+			<xs:annotation>
+				<xs:documentation>Сведения в формате URL об информационной системе, которая предоставляет техническую возможность получения информации о документе</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="500"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="РеквДопСведДок" use="optional">
+			<xs:annotation>
+				<xs:documentation>Дополнительные сведения</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="2000"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="СвИнНеУчТип">
+		<xs:annotation>
+			<xs:documentation>Сведения об иностранной организации (иностранном гражданине), не состоящей/состоящем на учете в налоговом органе</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="ИдСтат" use="required">
+			<xs:annotation>
+				<xs:documentation>Идентификация статуса</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:length value="2"/>
+					<xs:enumeration value="ИО"/>
+					<xs:enumeration value="ИГ"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="КодСтр" use="required">
+			<xs:annotation>
+				<xs:documentation>Код страны</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:length value="3"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="НаимСтран" use="required">
+			<xs:annotation>
+				<xs:documentation>Наименование страны</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="255"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="Наим" use="required">
+			<xs:annotation>
+				<xs:documentation>Наименование иностранной организации полное / фамилия, имя, отчество (при наличии) иностранного гражданина</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="1000"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="Идентиф" use="optional">
+			<xs:annotation>
+				<xs:documentation>Идентификатор иностранной организации (иностранного гражданина)</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="255"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="ИныеСвед" use="optional">
+			<xs:annotation>
+				<xs:documentation>Иные сведения для однозначной идентификации иностранной организации (иностранного гражданина)</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="255"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ПодписантТип">
+		<xs:annotation>
+			<xs:documentation>Сведения о лице, подписывающем информацию отправителя в электронной форме</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ФИО" type="ФИОТип">
+				<xs:annotation>
+					<xs:documentation>Фамилия, имя, отчество (при наличии)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="СвДоверЭл" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Сведения о доверенности в электронной форме в машиночитаемом виде, используемой для подтверждения полномочий представителя</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="НомДовер" use="required">
+							<xs:annotation>
+								<xs:documentation>Единый регистрационный номер доверенности</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:length value="36"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="ДатаВыдДовер" type="ДатаТип" use="required">
+							<xs:annotation>
+								<xs:documentation>Дата совершения (выдачи) доверенности</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="ВнНомДовер" use="optional">
+							<xs:annotation>
+								<xs:documentation>Внутренний номер доверенности</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:minLength value="1"/>
+									<xs:maxLength value="50"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="ДатаВнРегДовер" type="ДатаТип" use="optional">
+							<xs:annotation>
+								<xs:documentation>Дата внутренней регистрации доверенности</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="ИдСистХран" use="required">
+							<xs:annotation>
+								<xs:documentation>Идентифицирующая информация об информационной системе, в которой осуществляется хранение доверенности, необходимая для запроса информации из информационной системы</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:minLength value="1"/>
+									<xs:maxLength value="500"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="УРЛСист" use="optional">
+							<xs:annotation>
+								<xs:documentation>Сведения в формате URL об информационной системе, которая предоставляет техническую возможность получения информации о доверенности</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:minLength value="1"/>
+									<xs:maxLength value="500"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="СвДоверБум" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Сведения о доверенности в форме документа на бумажном носителе, используемой для подтверждения полномочий представителя</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ФИО" type="ФИОТип" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Фамилия, имя, отчество (при наличии) лица, подписавшего доверенность</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="ДатаДовер" type="ДатаТип" use="required">
+							<xs:annotation>
+								<xs:documentation>Дата совершения (выдачи) доверенности</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="ВнНомДовер" use="required">
+							<xs:annotation>
+								<xs:documentation>Внутренний номер доверенности</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:minLength value="1"/>
+									<xs:maxLength value="50"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="СвИдДовер" use="optional">
+							<xs:annotation>
+								<xs:documentation>Сведения, идентифицирующие доверителя</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:minLength value="1"/>
+									<xs:maxLength value="1000"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="Должн" use="required">
+			<xs:annotation>
+				<xs:documentation>Должность</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="255"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="ТипПодпис" use="optional">
+			<xs:annotation>
+				<xs:documentation>Тип подписи</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:length value="1"/>
+					<xs:enumeration value="1"/>
+					<xs:enumeration value="2"/>
+					<xs:enumeration value="3"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="ДатаПодДок" type="ДатаТип" use="optional">
+			<xs:annotation>
+				<xs:documentation>Дата подписания документа</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="СпосПодтПолном" use="required">
+			<xs:annotation>
+				<xs:documentation>Способ подтверждения полномочий представителя на подписание документа</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:length value="1"/>
+					<xs:enumeration value="1"/>
+					<xs:enumeration value="2"/>
+					<xs:enumeration value="3"/>
+					<xs:enumeration value="4"/>
+					<xs:enumeration value="5"/>
+					<xs:enumeration value="6"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="ДопСведПодп" use="optional">
+			<xs:annotation>
+				<xs:documentation>Дополнительные сведения</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="255"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="СумНДСТип">
+		<xs:annotation>
+			<xs:documentation>Сумма налога</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="СумНал">
+				<xs:annotation>
+					<xs:documentation>Значение</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="19"/>
+						<xs:fractionDigits value="2"/>
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="БезНДС">
+				<xs:annotation>
+					<xs:documentation>Без НДС</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="7"/>
+						<xs:enumeration value="без НДС"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="ИнфПолТип">
+		<xs:annotation>
+			<xs:documentation>Информационное поле</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ТекстИнф" type="ТекстИнфТип" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Текстовая информация</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="ИдФайлИнфПол" use="optional">
+			<xs:annotation>
+				<xs:documentation>Идентификатор файла информационного поля</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:length value="36"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ТекстИнфТип">
+		<xs:annotation>
+			<xs:documentation>Текстовая информация</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Идентиф" use="required">
+			<xs:annotation>
+				<xs:documentation>Идентификатор</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="50"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="Значен" use="required">
+			<xs:annotation>
+				<xs:documentation>Значение</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="2000"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ФИОТип">
+		<xs:annotation>
+			<xs:documentation>Фамилия, имя, отчество физического лица</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Фамилия" use="required">
+			<xs:annotation>
+				<xs:documentation>Фамилия</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="60"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="Имя" use="required">
+			<xs:annotation>
+				<xs:documentation>Имя</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="60"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="Отчество" use="optional">
+			<xs:annotation>
+				<xs:documentation>Отчество</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="60"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:simpleType name="ИННФЛТип">
+		<xs:annotation>
+			<xs:documentation>Идентификационный номер налогоплательщика - физического лица</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="12"/>
+			<xs:pattern value="([0-9]{1}[1-9]{1}|[1-9]{1}[0-9]{1})[0-9]{10}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ИННЮЛТип">
+		<xs:annotation>
+			<xs:documentation>Идентификационный номер налогоплательщика - организации</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="10"/>
+			<xs:pattern value="([0-9]{1}[1-9]{1}|[1-9]{1}[0-9]{1})[0-9]{8}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="КППТип">
+		<xs:annotation>
+			<xs:documentation>Код причины постановки на учет (КПП) - 5 и 6 знаки от 0-9 и A-Z</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="9"/>
+			<xs:pattern value="([0-9]{1}[1-9]{1}|[1-9]{1}[0-9]{1})([0-9]{2})([0-9A-Z]{2})([0-9]{3})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ВремяТип">
+		<xs:annotation>
+			<xs:documentation>Время в формате ЧЧ:ММ:СС</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="8"/>
+			<xs:pattern value="([0-1]{1}[0-9]{1}|2[0-3]{1}):([0-5]{1}[0-9]{1}):([0-5]{1}[0-9]{1})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ДатаТип">
+		<xs:annotation>
+			<xs:documentation>Дата в формате ДД.ММ.ГГГГ (01.01.1900 - 31.12.2099)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="10"/>
+			<xs:pattern value="((((0[1-9]{1}|1[0-9]{1}|2[0-8]{1})\.(0[1-9]{1}|1[0-2]{1}))|((29|30)\.(01|0[3-9]{1}|1[0-2]{1}))|(31\.(01|03|05|07|08|10|12)))\.((19|20)[0-9]{2}))|(29\.02\.((19|20)(((0|2|4|6|8)(0|4|8))|((1|3|5|7|9)(2|6)))))"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
